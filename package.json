@@ -1,6 +1,6 @@
 {
   "name": "@rjdellecese/elm-ts",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "A porting of TEA to TypeScript featuring fp-ts, rxjs6 and React",
   "files": [
     "lib",

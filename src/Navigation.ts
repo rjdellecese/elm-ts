@@ -1,7 +1,7 @@
 /**
- * A specialization of `Program` that handles application navigation via location's hash.
+ * A specialization of `Program` that handles application navigation via a location's path.
  *
- * It uses [`history`](https://github.com/ReactTraining/history) package.
+ * It uses the [`history`](https://github.com/remix-run/history) package.
  *
  * @since 0.5.0
  */

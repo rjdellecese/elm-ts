@@ -18,6 +18,7 @@ high state of flux, you're at risk of it changing without notice.
 - **Breaking Changes**
 
   - upgrade to`history@5.x` (@rjdellecese)
+  - replace hash history "environment" with browser history (see [`history` docs](https://github.com/remix-run/history/blob/3e9dab413f4eda8d6bce565388c5ddb7aeff9f7e/docs/api-reference.md#environments)) (@rjdellecese)
 
 ## 0.7.2
 

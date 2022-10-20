@@ -27,7 +27,7 @@ const history = H.createHashHistory()
  */
 const location$ = new Subject<Location>()
 
-history.listen(location => {
+history.listen(({ location }) => {
   location$.next(location)
 })
 

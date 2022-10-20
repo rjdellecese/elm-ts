@@ -1,7 +1,7 @@
 import { Action, History, Listener, To } from 'history'
 
 /**
- * Creates a mocked implementation of the `history.createHashHistory()` function that tracks location changes through the `log` parameter
+ * Creates a mocked implementation of the `history.createBrowserHistory()` function that tracks location changes through the `log` parameter
  */
 export function createMockHistory(log: string[]): () => History {
   let listener: Listener

@@ -20,7 +20,7 @@ import { Sub, batch, none } from './Sub'
  */
 export type Location = H.Location
 
-const history = H.createHashHistory()
+const history = H.createBrowserHistory()
 
 /**
  * Location changes are expressed as a stream

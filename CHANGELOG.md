@@ -15,18 +15,6 @@ high state of flux, you're at risk of it changing without notice.
 
 ## 0.7.2
 
-- **Bug Fix**
-
-  - properly update `package-lock.json`, again (@rjdellecese)
-
-## 0.7.1
-
-- **Bug Fix**
-
-  - properly update version in `package-lock.json` (@rjdellecese)
-
-## 0.7.0
-
 - **Breaking Change**
 
   - upgrade to `react@17.x` (@rjdellecese)

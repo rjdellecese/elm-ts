@@ -65,7 +65,10 @@ describe('Navigation', () => {
       assert.strictEqual(cmds.length, 1)
 
       return cmds[0]().then(() => {
-        assert.deepStrictEqual(views.map(x => x(dispatch).text), ['', 'foo', 'bar'])
+        assert.deepStrictEqual(
+          views.map(x => x(dispatch).text),
+          ['', 'foo', 'bar']
+        )
         assert.deepStrictEqual(subs, [{ type: 'BAR' }])
       })
     })
@@ -99,7 +102,10 @@ describe('Navigation', () => {
 
       return cmds[0]().then(() => {
         // "BAR" is dispatch after "LISTEN" because it's dependent of `cmd()`
-        assert.deepStrictEqual(views.map(x => x(dispatch).text), ['', 'foo', 'sub', 'listen', 'bar'])
+        assert.deepStrictEqual(
+          views.map(x => x(dispatch).text),
+          ['', 'foo', 'sub', 'listen', 'bar']
+        )
         assert.deepStrictEqual(subs, [{ type: 'LISTEN' }, { type: 'BAR' }])
       })
     })
@@ -116,7 +122,10 @@ describe('Navigation', () => {
       html$.subscribe(v => views.push(v))
       sub$.subscribe(v => subs.push(v))
 
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['start!'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['start!']
+      )
       assert.deepStrictEqual(subs, [])
     })
 
@@ -132,7 +141,10 @@ describe('Navigation', () => {
 
       dispatch({ type: 'SUB' })
 
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['start!', 'sub'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['start!', 'sub']
+      )
       assert.deepStrictEqual(subs, [{ type: 'LISTEN' }])
     })
   })

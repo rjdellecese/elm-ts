@@ -1,46 +1,48 @@
-import { History, LocationDescriptorObject, LocationListener, UnregisterCallback } from 'history'
+import { Action, History, Listener, To } from 'history'
 
 /**
  * Creates a mocked implementation of the `history.createHashHistory()` function that tracks location changes through the `log` parameter
  */
 export function createMockHistory(log: string[]): () => History {
-  let listener: LocationListener
+  let listener: Listener
 
   return () => ({
     location: {
       pathname: log.length > 0 ? log[log.length - 1] : '',
       search: '',
       state: null,
-      hash: ''
+      hash: '',
+      key: ''
     },
 
-    push: (path: string | LocationDescriptorObject): void => {
-      const p = typeof path === 'string' ? path : typeof path.pathname !== 'undefined' ? path.pathname : ''
+    push: (to: To): void => {
+      const p = typeof to === 'string' ? to : typeof to.pathname !== 'undefined' ? to.pathname : ''
       log.push(p)
 
-      listener(
-        {
+      listener({
+        location: {
           pathname: p,
           search: '',
           state: null,
-          hash: ''
+          hash: '',
+          key: ''
         },
-        'PUSH'
-      )
+        action: Action.Push
+      })
     },
 
-    listen: (fn: History.LocationListener): UnregisterCallback => {
-      listener = fn
+    listen: (listener_: Listener): (() => void) => {
+      listener = listener_
       return () => undefined
     },
 
     // These are needed by `history` types declaration
     length: log.length,
-    action: 'PUSH',
+    action: Action.Push,
     replace: () => undefined,
     go: () => undefined,
-    goBack: () => undefined,
-    goForward: () => undefined,
+    back: () => undefined,
+    forward: () => undefined,
     block: () => () => undefined,
     createHref: () => ''
   })

@@ -8,7 +8,7 @@ jest.mock('history')
 const historyM = mocked(history)
 const historyLog: string[] = []
 
-historyM.createHashHistory.mockImplementation(createMockHistory(historyLog))
+historyM.createBrowserHistory.mockImplementation(createMockHistory(historyLog))
 // --- /Mocking
 
 import * as assert from 'assert'

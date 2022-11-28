@@ -184,6 +184,7 @@ function toXHRRequest<A>(req: Request<A>): AjaxRequest {
 
 function toResponse(resp: AjaxResponse): Response<string> {
   return {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     url: resp.request.url!, // url in Request is always defined
     status: { code: resp.status, message: resp.xhr.statusText },
     headers: toResponseHeaders(resp.xhr),
@@ -217,6 +218,7 @@ function toHttpError<A>(req: Request<A>, e: unknown): HttpError {
     return {
       _tag: 'BadStatus',
       response: {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         url: e.request.url!, // url in Request is always defined
         status: { code: e.status, message: e.xhr.statusText },
         headers: toResponseHeaders(e.xhr),

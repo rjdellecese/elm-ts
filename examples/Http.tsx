@@ -85,7 +85,10 @@ export function view(model: Model): Html<Msg> {
         model.gifUrl,
         O.fold(
           () => <span>loading...</span>,
-          E.fold(error => <span>Error: {error._tag}</span>, gifUrl => <img src={gifUrl} />)
+          E.fold(
+            error => <span>Error: {error._tag}</span>,
+            gifUrl => <img src={gifUrl} />
+          )
         )
       )}
       <button onClick={() => dispatch({ type: 'MorePlease' })}>New Gif</button>

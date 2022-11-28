@@ -38,7 +38,10 @@ describe('Html', () => {
       dispatch({ type: 'BAR' })
       dispatch({ type: 'DO-THE-THING!' })
 
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['', 'foo', 'bar'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['', 'foo', 'bar']
+      )
       assert.deepStrictEqual(subs, [])
     })
 
@@ -54,7 +57,10 @@ describe('Html', () => {
       dispatch({ type: 'BAR' })
       dispatch({ type: 'SUB' })
 
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['', 'foo', 'bar', 'sub'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['', 'foo', 'bar', 'sub']
+      )
       assert.deepStrictEqual(subs, [{ type: 'LISTEN' }])
     })
   })
@@ -68,7 +74,10 @@ describe('Html', () => {
 
       html$.subscribe(v => views.push(v))
 
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['start!'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['start!']
+      )
     })
   })
 
@@ -103,7 +112,10 @@ describe('Html', () => {
       const commands = await sequenceTask(cmds)()
 
       assert.deepStrictEqual(commands, [some({ type: 'FOO' })])
-      assert.deepStrictEqual(views.map(x => x(dispatch).text), ['', 'foo', 'bar', 'sub'])
+      assert.deepStrictEqual(
+        views.map(x => x(dispatch).text),
+        ['', 'foo', 'bar', 'sub']
+      )
       assert.deepStrictEqual(subs, [{ type: 'LISTEN' }])
     })
   })

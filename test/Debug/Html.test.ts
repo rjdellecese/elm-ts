@@ -145,7 +145,10 @@ describe('Debug', () => {
     updates.pipe(take(2)).subscribe({
       complete: () => {
         assert.strictEqual(log.length, 2)
-        assert.deepStrictEqual(log, [[{ type: 'INIT' }, 10], [{ type: 'MESSAGE', payload: { type: 'Inc' } }, 11]])
+        assert.deepStrictEqual(log, [
+          [{ type: 'INIT' }, 10],
+          [{ type: 'MESSAGE', payload: { type: 'Inc' } }, 11]
+        ])
 
         done()
       }

@@ -15,7 +15,7 @@ nav_order: 1
 
 interface Capabilities extends FileSystem, Logger {}
 
-interface AppEff<A> extends Program<Capabilities, A> {}
+type AppEff<A> = Program<Capabilities, A>
 
 const withHeadline = (content: string): string => `${HEADLINE}${content}`
 

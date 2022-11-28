@@ -19,7 +19,7 @@ Added in v0.5.0
 - [constructors](#constructors)
   - [none](#none)
 - [model](#model)
-  - [Sub (interface)](#sub-interface)
+  - [Sub (type alias)](#sub-type-alias)
 - [utils](#utils)
   - [batch](#batch)
 
@@ -55,12 +55,12 @@ Added in v0.5.0
 
 # model
 
-## Sub (interface)
+## Sub (type alias)
 
 **Signature**
 
 ```ts
-export interface Sub<Msg> extends Observable<Msg> {}
+export type Sub<Msg> = Observable<Msg>
 ```
 
 Added in v0.5.0

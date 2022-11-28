@@ -18,13 +18,7 @@ export const flags: Flags = undefined
 export type Model = O.Option<Time>
 
 export function init(_: Flags): [Model, cmd.Cmd<Msg>] {
-  return [
-    O.none,
-    pipe(
-      now(),
-      perform(newTime)
-    )
-  ]
+  return [O.none, pipe(now(), perform(newTime))]
 }
 
 // --- Messages
@@ -47,13 +41,7 @@ function delay<A>(n: number, task: T.Task<A>): T.Task<A> {
 export function update(msg: Msg, _: Model): [Model, cmd.Cmd<Msg>] {
   switch (msg.type) {
     case 'Click':
-      return [
-        O.none,
-        pipe(
-          delay(1000, now()),
-          perform(newTime)
-        )
-      ]
+      return [O.none, pipe(delay(1000, now()), perform(newTime))]
 
     case 'NewTime':
       return [O.some(msg.time), cmd.none]
@@ -64,11 +52,7 @@ export function update(msg: Msg, _: Model): [Model, cmd.Cmd<Msg>] {
 export function view(model: Model): Html<Msg> {
   return dispatch => (
     <div>
-      Time:{' '}
-      {pipe(
-        model,
-        O.fold(displayLoading, displayTime)
-      )}
+      Time: {pipe(model, O.fold(displayLoading, displayTime))}
       <button onClick={() => dispatch({ type: 'Click' })}>New time</button>
     </div>
   )

@@ -128,6 +128,7 @@ describe('Http', () => {
       const oriXHR = XMLHttpRequest
 
       // Make it throw a non `Error` in order to check the refinement
+      // eslint-disable-next-line no-global-assign
       XMLHttpRequest = (function () {
         throw 'booom!' // tslint:disable-line no-string-throw
       } as unknown) as any
@@ -137,6 +138,7 @@ describe('Http', () => {
 
       assert.deepStrictEqual(result, E.left({ _tag: 'NetworkError', value: '' }))
 
+      // eslint-disable-next-line no-global-assign
       XMLHttpRequest = oriXHR
     })
 

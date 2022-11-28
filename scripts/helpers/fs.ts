@@ -17,20 +17,9 @@ const globTE = taskify<string, Error, string[]>(Glob)
 const toError = (e: Error): string => e.message
 
 export const fileSystemNode: FileSystem = {
-  readFile: path =>
-    pipe(
-      readFileTE(path, 'utf8'),
-      mapLeft(toError)
-    ),
+  readFile: path => pipe(readFileTE(path, 'utf8'), mapLeft(toError)),
 
-  writeFile: flow(
-    writeFileTE,
-    mapLeft(toError)
-  ),
+  writeFile: flow(writeFileTE, mapLeft(toError)),
 
-  glob: pattern =>
-    pipe(
-      globTE(pattern),
-      mapLeft(toError)
-    )
+  glob: pattern => pipe(globTE(pattern), mapLeft(toError))
 }

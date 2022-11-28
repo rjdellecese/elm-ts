@@ -20,7 +20,12 @@ describe('Task', () => {
 
   it('attempt() should "perform" at runtime a Task that can fail', done => {
     const te = task.of(right('foo'))
-    const a = attempt(fold(_ => ({ type: 'BAR' }), _ => ({ type: 'FOO' })))
+    const a = attempt(
+      fold(
+        _ => ({ type: 'BAR' }),
+        _ => ({ type: 'FOO' })
+      )
+    )
 
     return a(te).subscribe(async to => {
       const result = await to()

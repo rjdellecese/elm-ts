@@ -38,7 +38,7 @@ Added in v0.5.0
   - [URI (type alias)](#uri-type-alias)
   - [decoder](#decoder)
 - [model](#model)
-  - [Decoder (interface)](#decoder-interface)
+  - [Decoder (type alias)](#decoder-type-alias)
 
 ---
 
@@ -198,12 +198,12 @@ Added in v0.5.0
 
 # model
 
-## Decoder (interface)
+## Decoder (type alias)
 
 **Signature**
 
 ```ts
-export interface Decoder<A> extends ReaderEither<unknown, string, A> {}
+export type Decoder<A> = ReaderEither<unknown, string, A>
 ```
 
 Added in v0.5.0

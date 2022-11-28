@@ -55,6 +55,7 @@ export function consoleDebugger<Model, Msg>(): Debugger<Model, Msg> {
  * @since 0.5.0
  */
 function getMsgType<Msg>(m: DebugMsg<Msg>): Option<string> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { payload } = m as any
 
   return pipe(

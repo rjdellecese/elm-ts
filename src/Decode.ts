@@ -37,7 +37,7 @@ declare module 'fp-ts/lib/HKT' {
  * @category model
  * @since 0.5.0
  */
-export interface Decoder<A> extends ReaderEither<unknown, string, A> {}
+export type Decoder<A> = ReaderEither<unknown, string, A>
 
 /**
  * @category constructors

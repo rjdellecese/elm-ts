@@ -15,20 +15,20 @@ import { Sub } from './Sub'
  * @category model
  * @since 0.5.0
  */
-export interface Dom extends ReactElement<any> {}
+export type Dom = ReactElement
 
 /**
  * `Html` has `Dom` type constrained to the specialized version for `React`.
  * @category model
  * @since 0.5.0
  */
-export interface Html<Msg> extends html.Html<Dom, Msg> {}
+export type Html<Msg> = html.Html<Dom, Msg>
 
 /**
  * @category model
  * @since 0.5.0
  */
-export interface Program<Model, Msg> extends html.Program<Model, Msg, Dom> {}
+export type Program<Model, Msg> = html.Program<Model, Msg, Dom>
 
 /**
  * `map()` is `Html.map()` with `Html` type constrained to the specialized version for `React`.

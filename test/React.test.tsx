@@ -175,7 +175,7 @@ function makeEntryPoint(): [HTMLDivElement, () => void] {
 
 type Contents = Array<string | null>
 
-function makeRenderer(container: HTMLDivElement): [Contents, (dom: React.ReactElement<any>) => void] {
+function makeRenderer(container: HTMLDivElement): [Contents, (dom: React.ReactElement) => void] {
   const log: Contents = []
 
   return [

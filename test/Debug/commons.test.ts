@@ -77,7 +77,10 @@ describe('Debug/commons', () => {
 
       debug$.next([debugMsg({ tag: 'Inc' }), 1])
 
-      assert.deepStrictEqual(log, [[debugInit(), 0], [debugMsg({ tag: 'Inc' }), 1]])
+      assert.deepStrictEqual(log, [
+        [debugInit(), 0],
+        [debugMsg({ tag: 'Inc' }), 1]
+      ])
 
       assert.strictEqual((DevToolDebugger.reduxDevToolDebugger as any).mock.calls.length, 0)
     })
@@ -106,7 +109,10 @@ describe('Debug/commons', () => {
 
       debug$.next([debugMsg({ tag: 'Inc' }), 1])
 
-      assert.deepStrictEqual(log, [[debugInit(), 0], [debugMsg({ tag: 'Inc' }), 1]])
+      assert.deepStrictEqual(log, [
+        [debugInit(), 0],
+        [debugMsg({ tag: 'Inc' }), 1]
+      ])
 
       assert.strictEqual((ConsoleDebugger.consoleDebugger as any).mock.calls.length, 0)
     })
@@ -139,7 +145,11 @@ describe('Debug/commons', () => {
       debug$.next([debugMsg({ tag: 'Inc' }), 1])
       debug$.next([debugMsg({ tag: 'Inc' }), 1])
 
-      assert.deepStrictEqual(log, [[debugInit(), 0], [debugMsg({ tag: 'Inc' }), 1], [debugMsg({ tag: 'Dec' }), 0]])
+      assert.deepStrictEqual(log, [
+        [debugInit(), 0],
+        [debugMsg({ tag: 'Inc' }), 1],
+        [debugMsg({ tag: 'Dec' }), 0]
+      ])
       assert.strictEqual(spyStop.mock.calls.length, 1)
     })
   })

@@ -24,13 +24,14 @@ export const init = (flags: Flags): [Model, Cmd<Msg>] => {
 
 export const update = (msg: Msg, model: Model): [Model, Cmd<Msg>] => {
   switch (msg.group) {
-    case 'Counter':
+    case 'Counter': {
       const [counter, counterCmd] = Counter.update(msg, model.counter)
       return withEffect({ ...model, counter }, counterCmd)
-
-    case 'StringBuilder':
+    }
+    case 'StringBuilder': {
       const [stringBuilder, stringBuilderCmd] = StringBuilder.update(msg, model.stringBuilder)
       return withEffect({ ...model, stringBuilder }, stringBuilderCmd)
+    }
   }
 }
 

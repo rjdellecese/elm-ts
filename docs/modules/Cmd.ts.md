@@ -23,7 +23,7 @@ Added in v0.5.0
 - [constructors](#constructors)
   - [none](#none)
 - [model](#model)
-  - [Cmd (interface)](#cmd-interface)
+  - [Cmd (type alias)](#cmd-type-alias)
 - [utils](#utils)
   - [batch](#batch)
 
@@ -73,12 +73,12 @@ Added in v0.5.0
 
 # model
 
-## Cmd (interface)
+## Cmd (type alias)
 
 **Signature**
 
 ```ts
-export interface Cmd<Msg> extends Observable<Task<Option<Msg>>> {}
+export type Cmd<Msg> = Observable<Task<Option<Msg>>>
 ```
 
 Added in v0.5.0

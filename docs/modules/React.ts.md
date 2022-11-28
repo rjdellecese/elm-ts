@@ -20,9 +20,9 @@ Added in v0.5.0
   - [program](#program)
   - [programWithFlags](#programwithflags)
 - [model](#model)
-  - [Dom (interface)](#dom-interface)
-  - [Html (interface)](#html-interface)
-  - [Program (interface)](#program-interface)
+  - [Dom (type alias)](#dom-type-alias)
+  - [Html (type alias)](#html-type-alias)
+  - [Program (type alias)](#program-type-alias)
 - [utils](#utils)
   - [run](#run)
 
@@ -80,36 +80,36 @@ Added in v0.5.0
 
 # model
 
-## Dom (interface)
+## Dom (type alias)
 
 `Dom` is a `ReactElement`.
 
 **Signature**
 
 ```ts
-export interface Dom extends ReactElement<any> {}
+export type Dom = ReactElement
 ```
 
 Added in v0.5.0
 
-## Html (interface)
+## Html (type alias)
 
 `Html` has `Dom` type constrained to the specialized version for `React`.
 
 **Signature**
 
 ```ts
-export interface Html<Msg> extends html.Html<Dom, Msg> {}
+export type Html<Msg> = html.Html<Dom, Msg>
 ```
 
 Added in v0.5.0
 
-## Program (interface)
+## Program (type alias)
 
 **Signature**
 
 ```ts
-export interface Program<Model, Msg> extends html.Program<Model, Msg, Dom> {}
+export type Program<Model, Msg> = html.Program<Model, Msg, Dom>
 ```
 
 Added in v0.5.0

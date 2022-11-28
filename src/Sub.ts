@@ -11,7 +11,7 @@ import { map as RxMap } from 'rxjs/operators'
  * @category model
  * @since 0.5.0
  */
-export interface Sub<Msg> extends Observable<Msg> {}
+export type Sub<Msg> = Observable<Msg>
 
 /**
  * Maps `Msg` of a `Sub` into another `Msg`.

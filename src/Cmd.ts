@@ -15,7 +15,7 @@ import { map as RxMap } from 'rxjs/operators'
  * @category model
  * @since 0.5.0
  */
-export interface Cmd<Msg> extends Observable<Task<Option<Msg>>> {}
+export type Cmd<Msg> = Observable<Task<Option<Msg>>>
 
 /**
  * Creates a new `Cmd` that carries the provided `Msg`.

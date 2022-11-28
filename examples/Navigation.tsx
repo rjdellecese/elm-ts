@@ -22,7 +22,7 @@ export const flags: Flags = defaultRoute
 export type Model = Route
 
 function isRoute(route: string): route is Route {
-  return routes.hasOwnProperty(route)
+  return Object.prototype.hasOwnProperty.call(routes, route)
 }
 
 function getRoute(location: Location): Route {

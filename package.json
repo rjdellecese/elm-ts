@@ -40,7 +40,8 @@
     "build": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.build-es6.json",
     "postbuild": "ts-node scripts/rewrite-es6-paths",
     "docs": "docs-ts",
-    "postdocs": "ts-node scripts/docs-index"
+    "postdocs": "ts-node scripts/docs-index",
+    "prepare": "husky install"
   },
   "dependencies": {
     "history": "^5.3.0"
@@ -104,10 +105,5 @@
     ],
     "testMatch": null,
     "testRegex": "(\\.|/)(test|spec)\\.tsx?$"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }

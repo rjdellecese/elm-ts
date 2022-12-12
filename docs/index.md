@@ -21,7 +21,7 @@ Note: `fp-ts`, `rxjs` and `react` are peer dependencies
 
 - no ports
 - `React` instead of `virtual-dom` (pluggable)
-- `Navigation` is based on [history](https://github.com/ReactTraining/history)
+- `Navigation` is based on [history](https://github.com/remix-run/history)
 
 ## React
 

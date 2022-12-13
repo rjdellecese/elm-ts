@@ -10,17 +10,9 @@ const withModel = (model: Model): State => [model, cmd.none]
 
 const withEffect = (model: Model, cmd: cmd.Cmd<Msg>): State => [model, cmd]
 
-const doFoo = of(
-  task.of(
-    some<Msg>({ type: 'FOO' })
-  )
-)
+const doFoo = of(task.of(some<Msg>({ type: 'FOO' })))
 
-const doBaz = of(
-  task.of(
-    some<Msg>({ type: 'BAZ' })
-  )
-)
+const doBaz = of(task.of(some<Msg>({ type: 'BAZ' })))
 
 // ---------
 // --- MODEL

@@ -20,15 +20,20 @@ const getES6Paths: AppEff<string[]> = C => C.glob(ES6_GLOB_PATTERN)
 
 const replacePath = (content: string): string => content.replace(PATH_REGEXP, '$1/es6/$2')
 
-const rewritePaths = (file: string): AppEff<void> => C =>
-  pipe(
-    C.debug(`Rewriting file ${file}`),
-    TE.chain(() => C.readFile(file)),
-    TE.map(replacePath),
-    TE.chain(content => C.writeFile(file, content))
-  )
+const rewritePaths =
+  (file: string): AppEff<void> =>
+  C =>
+    pipe(
+      C.debug(`Rewriting file ${file}`),
+      TE.chain(() => C.readFile(file)),
+      TE.map(replacePath),
+      TE.chain(content => C.writeFile(file, content))
+    )
 
-const log = (s: string): AppEff<void> => C => C.log(s)
+const log =
+  (s: string): AppEff<void> =>
+  C =>
+    C.log(s)
 
 const main: AppEff<void[]> = pipe(
   getES6Paths,

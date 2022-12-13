@@ -1,11 +1,25 @@
 import * as assert from 'assert'
 import * as React from 'react'
-import { render, unmountComponentAtNode } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { act } from 'react-dom/test-utils'
 import { Cmd, none } from '../src/Cmd'
 import { Html, map, program, programWithFlags, run } from '../src/React'
 import * as App from './helpers/app'
 import { delayedAssert } from './helpers/utils'
+
+declare global {
+  var IS_REACT_ACT_ENVIRONMENT: boolean // eslint-disable-line no-var
+}
+
+const initialIsReactActEnvironment = globalThis.IS_REACT_ACT_ENVIRONMENT
+
+beforeAll(() => {
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true
+})
+
+afterAll(() => {
+  globalThis.IS_REACT_ACT_ENVIRONMENT = initialIsReactActEnvironment
+})
 
 describe('React', () => {
   describe('map()', () => {
@@ -24,9 +38,8 @@ describe('React', () => {
   })
 
   describe('program()', () => {
-    it('should return the Model/Cmd/Sub/Html streams and Dispatch function for React - no subscription', () => {
-      const [container, teardown] = makeEntryPoint()
-      const [renderings, renderer] = makeRenderer(container)
+    it('should return the Model/Cmd/Sub/Html streams and Dispatch function for React - no subscription', async () => {
+      const [teardown, renderings, renderer] = await makeReactApp()
 
       const { dispatch, html$ } = program(App.init, App.update, viewWithMount)
 
@@ -41,9 +54,8 @@ describe('React', () => {
       teardown()
     })
 
-    it('should return the Model/Cmd/Sub/Html streams and Dispatch function for React - with subscription', () => {
-      const [container, teardown] = makeEntryPoint()
-      const [renderings, renderer] = makeRenderer(container)
+    it('should return the Model/Cmd/Sub/Html streams and Dispatch function for React - with subscription', async () => {
+      const [teardown, renderings, renderer] = await makeReactApp()
 
       const subs: App.Msg[] = []
       const { sub$, html$, dispatch } = program(App.init, App.update, viewWithMount, App.subscriptions)
@@ -63,9 +75,8 @@ describe('React', () => {
   })
 
   describe('programWithFlags()', () => {
-    it('should return a function which returns a program() with flags on `init` for React', () => {
-      const [container, teardown] = makeEntryPoint()
-      const [renderings, renderer] = makeRenderer(container)
+    it('should return a function which returns a program() with flags on `init` for React', async () => {
+      const [teardown, renderings, renderer] = await makeReactApp()
 
       const initWithFlags = (f: string): [App.Model, Cmd<App.Msg>] => [{ x: f }, none]
       const withFlags = programWithFlags(initWithFlags, App.update, viewWithMount, App.subscriptions)
@@ -80,9 +91,8 @@ describe('React', () => {
   })
 
   describe('run()', () => {
-    it('should run the React Program', () => {
-      const [container, teardown] = makeEntryPoint()
-      const [renderings, renderer] = makeRenderer(container)
+    it('should run the React Program', async () => {
+      const [teardown, renderings, renderer] = await makeReactApp()
 
       const p = program(App.init, App.update, view, App.subscriptions)
 
@@ -100,9 +110,8 @@ describe('React', () => {
       })
     })
 
-    it('should run the React Program - with commands in init and on component mount', () => {
-      const [container, teardown] = makeEntryPoint()
-      const [renderings, renderer] = makeRenderer(container)
+    it('should run the React Program - with commands in init and on component mount', async () => {
+      const [teardown, renderings, renderer] = await makeReactApp()
 
       const p = program(App.initWithCmd, App.update, viewWithMount, App.subscriptions)
 
@@ -160,29 +169,24 @@ function Component({ value, onClick, onMount }: ComponentProps): JSX.Element {
   return <button onClick={onClick}>{value}</button>
 }
 
-function makeEntryPoint(): [HTMLDivElement, () => void] {
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  return [
-    container,
-    () => {
-      unmountComponentAtNode(container)
-      container.remove()
-    }
-  ]
-}
-
 type Contents = Array<string | null>
 
-function makeRenderer(container: HTMLDivElement): [Contents, (dom: React.ReactElement) => void] {
+async function makeReactApp(): Promise<[() => void, Contents, (dom: React.ReactElement) => void]> {
+  const container = document.createElement('div')
+  document.body.appendChild(container)
+  const root = await act(() => createRoot(container))
+
   const log: Contents = []
 
   return [
+    () => {
+      act(() => root.unmount())
+      container.remove()
+    },
     log,
     dom => {
       act(() => {
-        render(dom, container)
+        root.render(dom)
       })
 
       log.push(container.textContent)

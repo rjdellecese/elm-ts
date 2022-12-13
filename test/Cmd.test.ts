@@ -11,7 +11,7 @@ describe('Cmd', () => {
   it('of() should lift a Msg into a Cmd', done => {
     const input = of('TEST')
 
-    return input.subscribe(async to => {
+    input.subscribe(async to => {
       const result = await to()
 
       assert.deepStrictEqual(result, O.some('TEST'))
@@ -23,7 +23,7 @@ describe('Cmd', () => {
   it('map() should transform a Cmd<A> into a Cmd<B>', done => {
     const cmdA = Rx.of(T.of(O.some('a')))
 
-    return map(a => a + 'b')(cmdA).subscribe(async to => {
+    map(a => a + 'b')(cmdA).subscribe(async to => {
       const result = await to()
 
       assert.deepStrictEqual(result, O.some('ab'))
@@ -38,7 +38,7 @@ describe('Cmd', () => {
     const commands = [Rx.of(T.of(O.some('a'))), Rx.of(T.of(O.some('b'))), Rx.of(T.of(O.some('c')))]
 
     // Use `subscribe` and `done()` callbacks when dealing with async Observables
-    return batch(commands).subscribe({
+    batch(commands).subscribe({
       next: v => log.push(v),
 
       complete: async () => {

@@ -14,7 +14,7 @@ describe('Debug/redux-dev-tool', () => {
     }
 
     const noDevTool = getConnection({} as Global)
-    const globalWithDevTool = ({ __REDUX_DEVTOOLS_EXTENSION__: { connect: spyConnect } } as unknown) as Global
+    const globalWithDevTool = { __REDUX_DEVTOOLS_EXTENSION__: { connect: spyConnect } } as unknown as Global
     const withDevTool = getConnection(globalWithDevTool)
 
     assert.deepStrictEqual(noDevTool(), none)

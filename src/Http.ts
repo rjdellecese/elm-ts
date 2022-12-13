@@ -10,13 +10,13 @@ import * as Arr from 'fp-ts/lib/Array'
 import * as E from 'fp-ts/lib/Either'
 import * as O from 'fp-ts/lib/Option'
 import * as Rec from 'fp-ts/lib/Record'
-import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
+import { last } from 'fp-ts/lib/Semigroup'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { flow } from 'fp-ts/lib/function'
-import { pipe } from 'fp-ts/lib/pipeable'
-import { Observable, OperatorFunction, of } from 'rxjs'
-import { AjaxError, AjaxRequest, AjaxResponse, AjaxTimeoutError, ajax } from 'rxjs/ajax'
+import * as Json from 'fp-ts/lib/Json'
+import { pipe, flow } from 'fp-ts/lib/function'
+import { Observable, OperatorFunction, of, lastValueFrom } from 'rxjs'
+import { AjaxError, AjaxResponse, AjaxTimeoutError, ajax, AjaxConfig } from 'rxjs/ajax'
 import { catchError, map } from 'rxjs/operators'
 import { Cmd } from './Cmd'
 import { Decoder } from './Decode'
@@ -83,7 +83,7 @@ export type HttpError =
  * @since 0.5.0
  */
 export function toTask<A>(req: Request<A>): TaskEither<HttpError, A> {
-  return () => xhrOnlyBody(req).toPromise()
+  return () => lastValueFrom(xhrOnlyBody(req))
 }
 
 /**
@@ -150,7 +150,7 @@ type Result<A> = Either<HttpError, A>
 type ResultResponse<A> = Result<Response<A>>
 type TO<A> = T.Task<Option<A>>
 
-const fromStrArr = Rec.fromFoldableMap(getLastSemigroup<string>(), Arr.array)
+const fromStrArr = Rec.fromFoldableMap(last<string>(), Arr.Foldable)
 
 const xhrOnlyBody = flow(xhr, extractBody())
 
@@ -166,23 +166,23 @@ type ResultResponse$<A> = Observable<ResultResponse<A>>
 
 function xhr<A>(req: Request<A>): ResultResponse$<A> {
   return pipe(
-    toXHRRequest(req),
-    ajax,
+    ajax<string>(toXHRRequest(req)),
     map(flow(toResponse, decodeWith(req.expect))),
     catchError((e: unknown): ResultResponse$<A> => of(E.left(toHttpError(req, e))))
   )
 }
 
-function toXHRRequest<A>(req: Request<A>): AjaxRequest {
+function toXHRRequest<A>(req: Request<A>): AjaxConfig {
   return {
     ...req,
     timeout: O.getOrElse(() => 0)(req.timeout),
     async: true,
-    responseType: 'text'
+    responseType: 'text',
+    crossDomain: false
   }
 }
 
-function toResponse(resp: AjaxResponse): Response<string> {
+function toResponse(resp: AjaxResponse<string>): Response<string> {
   return {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     url: resp.request.url!, // url in Request is always defined
@@ -195,8 +195,9 @@ function toResponse(resp: AjaxResponse): Response<string> {
 function decodeWith<A>(decoder: Decoder<A>): (response: Response<string>) => ResultResponse<A> {
   return response =>
     pipe(
+      Json.parse(response.body),
       // By spec parsing json can only throw `SyntaxError`
-      E.parseJSON(response.body, e => (e as SyntaxError).message),
+      E.mapLeft(e => (e as SyntaxError).message),
       E.chain(decoder),
       E.bimap(
         value => ({ _tag: 'BadPayload', value, response }),

@@ -10,7 +10,10 @@ describe('Debug/console', () => {
   const oriConsoleGroupEnd = console.groupEnd
 
   let log: Array<{ type: string; value: any }>
-  const logger = (type: string) => (...values: any[]) => log.push({ type, value: values })
+  const logger =
+    (type: string) =>
+    (...values: any[]) =>
+      log.push({ type, value: values })
 
   // --- Setup
   beforeAll(() => {

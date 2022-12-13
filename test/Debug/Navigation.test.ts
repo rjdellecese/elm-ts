@@ -1,11 +1,10 @@
 // --- Mocking `History` module - super tricky...
 import * as history from 'history'
-import { mocked } from 'ts-jest/utils'
 import { createMockHistory } from '../helpers/mock-history'
 
 jest.mock('history')
 
-const historyM = mocked(history)
+const historyM = jest.mocked(history)
 const historyLog: string[] = []
 
 historyM.createBrowserHistory.mockImplementation(createMockHistory(historyLog))
@@ -160,7 +159,10 @@ describe('Debug', () => {
     // --- Trace only console debugger
     jest.spyOn(ConsoleDebugger, 'consoleDebugger').mockReturnValueOnce(mockDebugger(log))
 
-    const initWithFlags = (flag: string) => (_: history.Location): [Model, Cmd<Msg>] => [flag, none]
+    const initWithFlags =
+      (flag: string) =>
+      (_: history.Location): [Model, Cmd<Msg>] =>
+        [flag, none]
     const program = programWithDebuggerWithFlags(locationToMsg, initWithFlags, update, view)('/start')
     const runs = run(program, _ => undefined)
 
@@ -185,7 +187,10 @@ describe('Debug', () => {
     // --- Trace only console debugger
     jest.spyOn(ConsoleDebugger, 'consoleDebugger').mockReturnValueOnce(mockDebugger(log))
 
-    const initWithFlags = (flag: string) => (_: history.Location): [Model, Cmd<Msg>] => [flag, none]
+    const initWithFlags =
+      (flag: string) =>
+      (_: history.Location): [Model, Cmd<Msg>] =>
+        [flag, none]
     const withStop = programWithDebuggerWithFlagsWithStop(signal)
     const program = withStop(locationToMsg, initWithFlags, update, view)('/start')
     const updates = run(program, _ => undefined)
@@ -238,4 +243,7 @@ const update = (msg: Msg, model: Model): [Model, Cmd<Msg>] => {
   }
 }
 
-const view = (_: Model): Html<void, Msg> => _dispatch => undefined
+const view =
+  (_: Model): Html<void, Msg> =>
+  _dispatch =>
+    undefined

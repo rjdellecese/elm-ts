@@ -1,4 +1,4 @@
-import * as ReactDOM from 'react-dom'
+import * as ReactDOMClient from 'react-dom/client'
 
 import * as DebugHtml from '../../src/Debug/Html'
 import * as React from '../../src/React'
@@ -9,6 +9,10 @@ const program = process.env.NODE_ENV === 'production' ? React.programWithFlags :
 
 const main = program(App.init, App.update, App.view)
 
-React.run(main({ prefix: 'String: ' }), dom => {
-  ReactDOM.render(dom, document.getElementById('root'))
-})
+const element = document.getElementById('root')
+
+if (element) {
+  React.run(main({ prefix: 'String: ' }), dom => ReactDOMClient.createRoot(element).render(dom))
+} else {
+  throw 'Failed to find root element'
+}

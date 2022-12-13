@@ -66,7 +66,7 @@ A `none` command is an empty stream.
 **Signature**
 
 ```ts
-export declare const none: Cmd<never>
+export declare const none: any
 ```
 
 Added in v0.5.0

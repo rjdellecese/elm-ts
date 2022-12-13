@@ -205,4 +205,7 @@ const update = (msg: Msg, model: Model): [Model, Cmd<Msg>] => {
   }
 }
 
-const view = (_: Model): Html<void, Msg> => _dispatch => undefined
+const view =
+  (_: Model): Html<void, Msg> =>
+  _dispatch =>
+    undefined

@@ -34,10 +34,13 @@ export const update = (msg: Msg, model: Model): [Model, Cmd<Msg>] => {
   }
 }
 
-export const view = (model: Model): Html<Msg> => dispatch => (
-  <div>
-    <button onClick={() => dispatch(Up)}>Up</button>
-    <span>{model}</span>
-    <button onClick={() => dispatch(Down)}>Down</button>
-  </div>
-)
+export const view =
+  (model: Model): Html<Msg> =>
+  dispatch =>
+    (
+      <div>
+        <button onClick={() => dispatch(Up)}>Up</button>
+        <span>{model}</span>
+        <button onClick={() => dispatch(Down)}>Down</button>
+      </div>
+    )

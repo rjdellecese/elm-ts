@@ -129,9 +129,9 @@ describe('Http', () => {
 
       // Make it throw a non `Error` in order to check the refinement
       // eslint-disable-next-line no-global-assign
-      XMLHttpRequest = (function () {
+      XMLHttpRequest = function () {
         throw 'booom!' // tslint:disable-line no-string-throw
-      } as unknown) as any
+      } as unknown as any
 
       const request = Http.get('http://example.com/test', fromCodec(t.string))
       const result = await Http.toTask(request)()
@@ -191,7 +191,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.type({ a: t.string }))))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(result, some({ payload: { a: 'test' } }))
@@ -208,7 +208,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.string)))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(
@@ -237,7 +237,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.UnknownRecord)))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(result, some({ payload: {} }))
@@ -269,7 +269,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.type({ a: t.string }))))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(
@@ -296,7 +296,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.string)))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(
@@ -325,7 +325,7 @@ describe('Http', () => {
 
       const cmd = request(Http.get('http://example.com/test', fromCodec(t.UnknownRecord)))
 
-      return cmd.subscribe(async to => {
+      cmd.subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(

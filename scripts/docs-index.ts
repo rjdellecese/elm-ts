@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/function'
 import { FileSystem, fileSystemNode } from './helpers/fs'
 import { Logger, loggerConsole } from './helpers/logger'
 import { Program, run } from './helpers/program'

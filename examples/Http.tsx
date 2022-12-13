@@ -1,7 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
 import * as O from 'fp-ts/lib/Option'
-import { flow } from 'fp-ts/lib/function'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe, flow } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
 import { failure } from 'io-ts/lib/PathReporter'
 import { Lens } from 'monocle-ts'
@@ -48,6 +47,8 @@ const ApiPayloadSchema = t.interface({
   })
 })
 
+type ApiPayload = t.TypeOf<typeof ApiPayloadSchema>
+
 const decoder = flow(
   ApiPayloadSchema.decode,
   E.mapLeft(errors => failure(errors).join('\n'))
@@ -58,7 +59,7 @@ function getRandomGif(topic: string): cmd.Cmd<Msg> {
 
   return pipe(
     http.get(url, decoder),
-    http.send(e => newGif(E.either.map(e, a => a.data.image_url)))
+    http.send(e => newGif(E.map((a: ApiPayload) => a.data.image_url)(e)))
   )
 }
 
@@ -73,7 +74,6 @@ export function update(msg: Msg, model: Model): [Model, cmd.Cmd<Msg>] {
     case 'NewGif':
       return [gifUrlLens.set(O.some(msg.result))(model), cmd.none]
   }
-  throw new Error('err')
 }
 
 // --- View

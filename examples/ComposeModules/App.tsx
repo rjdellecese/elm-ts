@@ -35,10 +35,13 @@ export const update = (msg: Msg, model: Model): [Model, Cmd<Msg>] => {
   }
 }
 
-export const view = (model: Model): Html<Msg> => dispatch => (
-  <div>
-    <h1>My Application</h1>
-    {Counter.view(model.counter)(dispatch)}
-    {StringBuilder.view(model.stringBuilder)(dispatch)}
-  </div>
-)
+export const view =
+  (model: Model): Html<Msg> =>
+  dispatch =>
+    (
+      <div>
+        <h1>My Application</h1>
+        {Counter.view(model.counter)(dispatch)}
+        {StringBuilder.view(model.stringBuilder)(dispatch)}
+      </div>
+    )

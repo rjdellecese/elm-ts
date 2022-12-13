@@ -1,11 +1,10 @@
 // --- Mocking `History` module - super tricky...
 import * as history from 'history'
-import { mocked } from 'ts-jest/utils'
 import { createMockHistory } from './helpers/mock-history'
 
 jest.mock('history')
 
-const historyM = mocked(history)
+const historyM = jest.mocked(history)
 const log: string[] = []
 
 historyM.createBrowserHistory.mockImplementation(createMockHistory(log))
@@ -32,7 +31,7 @@ afterAll(() => {
 describe('Navigation', () => {
   describe('push()', () => {
     it('should push a new path into history and return a Cmd<msg>', done => {
-      return push('/a-path').subscribe(async to => {
+      push('/a-path').subscribe(async to => {
         const result = await to()
 
         assert.deepStrictEqual(result, O.none)
@@ -115,7 +114,10 @@ describe('Navigation', () => {
     it('programWithFlags() should return a function which returns a program() with flags on `init` - no subscription', () => {
       const views: NavView[] = []
       const subs: NavMsg[] = []
-      const initWithFlags = (f: string) => (_: Location): [App.Model, Cmd<NavMsg>] => [{ x: f }, none]
+      const initWithFlags =
+        (f: string) =>
+        (_: Location): [App.Model, Cmd<NavMsg>] =>
+          [{ x: f }, none]
       const withFlags = programWithFlags(locationToMsg, initWithFlags, navUpdate, App.view)
       const { dispatch, html$, sub$ } = withFlags('start!')
 
@@ -132,7 +134,10 @@ describe('Navigation', () => {
     it('programWithFlags() should return a function which returns a program() with flags on `init` - with subscription', () => {
       const views: NavView[] = []
       const subs: NavMsg[] = []
-      const initWithFlags = (f: string) => (_: Location): [App.Model, Cmd<NavMsg>] => [{ x: f }, none]
+      const initWithFlags =
+        (f: string) =>
+        (_: Location): [App.Model, Cmd<NavMsg>] =>
+          [{ x: f }, none]
       const withFlags = programWithFlags(locationToMsg, initWithFlags, navUpdate, App.view, subscriptions)
       const { dispatch, html$, sub$ } = withFlags('start!')
 

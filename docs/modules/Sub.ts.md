@@ -48,7 +48,7 @@ A `none` subscription is an empty stream.
 **Signature**
 
 ```ts
-export declare const none: Sub<never>
+export declare const none: any
 ```
 
 Added in v0.5.0

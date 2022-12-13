@@ -5,7 +5,7 @@
  */
 import { IO, chain, map } from 'fp-ts/lib/IO'
 import { fold } from 'fp-ts/lib/Option'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/function'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { Cmd, none } from '../Cmd'
@@ -131,7 +131,7 @@ export function updateWithDebug<Model, Msg>(
   update: (msg: Msg, model: Model) => [Model, Cmd<Msg>]
 ): (msg: MsgWithDebug<Model, Msg>, model: Model) => [Model, Cmd<Msg>] {
   return (msg, model) => {
-    if ('type' in msg) {
+    if (msg instanceof Object && 'type' in msg) {
       switch (msg.type) {
         case '__DebugUpdateModel__':
           return [msg.payload, none]

@@ -1,6 +1,6 @@
 import * as O from 'fp-ts/lib/Option'
 import * as T from 'fp-ts/lib/Task'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/function'
 import * as React from 'react'
 import { cmd } from '../src'
 import { Html } from '../src/React'

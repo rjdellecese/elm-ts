@@ -10,7 +10,8 @@ import { sequenceT } from 'fp-ts/lib/Apply'
 import * as E from 'fp-ts/lib/Either'
 import * as IO_ from 'fp-ts/lib/IO'
 import * as O from 'fp-ts/lib/Option'
-import { pipe } from 'fp-ts/lib/pipeable'
+import * as Json from 'fp-ts/lib/Json'
+import { flow, pipe } from 'fp-ts/lib/function'
 import { Dispatch } from '../Platform'
 import { Debug, Debugger, DebuggerR, Global, MsgWithDebug } from './commons'
 
@@ -19,7 +20,7 @@ import Option = O.Option
 import Either = E.Either
 import IO = IO_.IO
 
-const sequenceTEither = sequenceT(E.either)
+const sequenceTEither = sequenceT(E.Apply)
 
 type Unsubscription = () => void
 
@@ -149,11 +150,20 @@ function handleIncomingMsg<Model, Msg>({
   debug$,
   dispatch
 }: DevToolHandlerR<Model, Msg>): (msg: DevToolMsg) => Either<string, IO<void>> {
-  const dispatchToApp = (m: unknown): IO<void> => () => dispatch(m as Msg)
+  const dispatchToApp =
+    (m: unknown): IO<void> =>
+    () =>
+      dispatch(m as Msg)
   const reinit: IO<void> = () => connection.init(init)
   const update = (payload: Model): IO<void> => dispatchToApp({ type: '__DebugUpdateModel__', payload })
-  const restart = (model: Model): IO<void> => () => connection.init(model)
-  const liftState = (state: LiftedState<Model>): IO<void> => () => connection.send(null, state)
+  const restart =
+    (model: Model): IO<void> =>
+    () =>
+      connection.init(model)
+  const liftState =
+    (state: LiftedState<Model>): IO<void> =>
+    () =>
+      connection.send(null, state)
   const toggle = toggleAction(dispatch)
 
   return msg => {
@@ -163,8 +173,11 @@ function handleIncomingMsg<Model, Msg>({
 
       case 'ACTION':
         return pipe(
-          E.parseJSON(String(msg.payload), E.toError),
-          E.bimap(e => e.message, dispatchToApp)
+          Json.parse(String(msg.payload)),
+          E.bimap(
+            flow(E.toError, e => e.message),
+            dispatchToApp
+          )
         )
 
       case 'DISPATCH':
@@ -236,9 +249,9 @@ function handleActions<Model, Msg>({ connection }: DevToolHandlerR<Model, Msg>):
  */
 function parseJump<Model>(msg: Monitor): Either<string, Model> {
   return pipe(
-    E.parseJSON(String(msg.state), E.toError),
+    Json.parse(String(msg.state)),
     E.bimap(
-      e => e.message,
+      flow(E.toError, e => e.message),
       u => u as Model
     )
   )
@@ -251,9 +264,9 @@ function parseJump<Model>(msg: Monitor): Either<string, Model> {
  */
 function parseRollback<Model>(msg: Monitor): Either<string, Model> {
   return pipe(
-    E.parseJSON(String(msg.state), E.toError),
+    Json.parse(String(msg.state)),
     E.bimap(
-      e => e.message,
+      flow(E.toError, e => e.message),
       u => u as Model
     )
   )
@@ -283,10 +296,10 @@ function parseToggleAction<Model>(msg: Monitor): Either<string, [number, LiftedS
   )
 
   const parseState = pipe(
-    E.parseJSON(String(msg.state), E.toError),
+    Json.parse(String(msg.state)),
     E.bimap(
-      e => e.message,
-      u => u as LiftedState<Model>
+      flow(E.toError, e => e.message),
+      u => u as unknown as LiftedState<Model>
     )
   )
 

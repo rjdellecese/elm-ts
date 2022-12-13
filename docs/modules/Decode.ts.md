@@ -49,7 +49,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const alt: <A>(that: () => Decoder<A>) => (fa: Decoder<A>) => Decoder<A>
+export declare const alt: <A>(that: Lazy<Decoder<A>>) => (fa: Decoder<A>) => Decoder<A>
 ```
 
 Added in v0.5.0

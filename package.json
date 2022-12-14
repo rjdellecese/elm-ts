@@ -1,7 +1,7 @@
 {
   "name": "@rjdellecese/elm-ts",
   "version": "0.8.1",
-  "description": "A porting of TEA to TypeScript featuring fp-ts, rxjs and React",
+  "description": "A porting of TEA to TypeScript featuring fp-ts, RxJS and React",
   "files": [
     "lib",
     "es6"
@@ -47,9 +47,9 @@
     "history": "^5.3.0"
   },
   "peerDependencies": {
-    "fp-ts": "^2.0.2",
+    "fp-ts": "^2.13.1",
     "react": "^18.2.0",
-    "rxjs": "^6.5.2"
+    "rxjs": "^7.6.0"
   },
   "devDependencies": {
     "@types/glob": "^8.0.0",

@@ -13,6 +13,16 @@
 **Note**: Gaps between patch versions are faulty/broken releases. **Note**: A feature tagged as Experimental is in a
 high state of flux, you're at risk of it changing without notice.
 
+## 0.9.0
+
+- **Breaking Changes**
+
+  - upgrade to `react@18.x` and `rxjs@7.x` (@rjdellecese)
+
+- **Internal**
+
+  - upgrade all other out-of-date dependencies (@rjdellecese)
+
 ## 0.8.1
 
 - **Breaking Changes**

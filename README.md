@@ -2,6 +2,8 @@
 
 # elm-ts
 
+![npm (scoped)](https://img.shields.io/npm/v/@rjdellecese/elm-ts)
+
 A porting of [_The Elm Architecture_](https://guide.elm-lang.org/architecture/) to TypeScript featuring `fp-ts`, `RxJS` and `React`.
 
 ## Installation

@@ -1,14 +1,14 @@
 import * as assert from 'assert'
-import { array } from 'fp-ts/lib/Array'
+import * as A from 'fp-ts/lib/Array'
 import { Option, some } from 'fp-ts/lib/Option'
-import { Task, task } from 'fp-ts/lib/Task'
+import * as T from 'fp-ts/lib/Task'
 import { Subject } from 'rxjs'
 import { Cmd, none } from '../src/Cmd'
 import { map, program, programWithFlags, run, withStop } from '../src/Html'
 import * as App from './helpers/app'
 import { delayedAssert } from './helpers/utils'
 
-const sequenceTask = array.sequence(task)
+const sequenceTask = A.sequence(T.ApplicativeSeq)
 
 describe('Html', () => {
   describe('map()', () => {
@@ -85,7 +85,7 @@ describe('Html', () => {
     it('should stop the Program when a signal is emitted', async () => {
       const signal = new Subject<any>()
 
-      const cmds: Array<Task<Option<App.Msg>>> = []
+      const cmds: Array<T.Task<Option<App.Msg>>> = []
       const views: App.View[] = []
       const subs: App.Msg[] = []
       const { sub$, html$, cmd$, dispatch } = withStop(signal)(

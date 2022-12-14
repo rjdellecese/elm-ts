@@ -78,7 +78,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export type Cmd<Msg> = Observable<T.Task<O.Option<Msg>>>
+export type Cmd<Msg> = Observable<Task<Option<Msg>>>
 ```
 
 Added in v0.5.0

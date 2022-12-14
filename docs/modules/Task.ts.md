@@ -31,7 +31,7 @@ Executes a `Task` that can fail as a `Cmd` mapping the result (`Either`) to a `M
 **Signature**
 
 ```ts
-export declare function attempt<E, A, Msg>(f: (e: Either<E, A>) => Msg): (task: T.Task<Either<E, A>>) => Cmd<Msg>
+export declare function attempt<E, A, Msg>(f: (e: Either<E, A>) => Msg): (task: Task<Either<E, A>>) => Cmd<Msg>
 ```
 
 Added in v0.5.0
@@ -43,7 +43,7 @@ Executes a `Task` as a `Cmd` mapping the result to a `Msg`.
 **Signature**
 
 ```ts
-export declare function perform<A, Msg>(f: (a: A) => Msg): (t: T.Task<A>) => Cmd<Msg>
+export declare function perform<A, Msg>(f: (a: A) => Msg): (t: Task<A>) => Cmd<Msg>
 ```
 
 Added in v0.5.0

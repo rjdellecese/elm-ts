@@ -7,7 +7,9 @@
  */
 
 import * as O from 'fp-ts/lib/Option'
+import type { Option } from 'fp-ts/lib/Option'
 import * as T from 'fp-ts/lib/Task'
+import type { Task } from 'fp-ts/lib/Task'
 import { EMPTY, Observable, merge, of as RxOf } from 'rxjs'
 import { map as RxMap } from 'rxjs/operators'
 
@@ -15,7 +17,7 @@ import { map as RxMap } from 'rxjs/operators'
  * @category model
  * @since 0.5.0
  */
-export type Cmd<Msg> = Observable<T.Task<O.Option<Msg>>>
+export type Cmd<Msg> = Observable<Task<Option<Msg>>>
 
 /**
  * Creates a new `Cmd` that carries the provided `Msg`.

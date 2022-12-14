@@ -1,19 +1,19 @@
 import * as assert from 'assert'
-import { array } from 'fp-ts/lib/Array'
+import * as A from 'fp-ts/lib/Array'
 import { Option, some } from 'fp-ts/lib/Option'
-import { Task, task } from 'fp-ts/lib/Task'
+import * as T from 'fp-ts/lib/Task'
 import { Subject } from 'rxjs'
 import { Cmd, none } from '../src/Cmd'
 import { program, programWithFlags, run, withStop } from '../src/Platform'
 import * as App from './helpers/app'
 import { delayedAssert } from './helpers/utils'
 
-const sequenceTask = array.sequence(task)
+const sequenceTask = A.sequence(T.ApplicativeSeq)
 
 describe('Platform', () => {
   describe('program()', () => {
     it('should return the Model/Cmd/Sub streams and Dispatch function - no subscription', async () => {
-      const cmds: Array<Task<Option<App.Msg>>> = []
+      const cmds: Array<T.Task<Option<App.Msg>>> = []
       const models: App.Model[] = []
       const subs: App.Msg[] = []
       const { model$, cmd$, sub$, dispatch } = program(App.init, App.update)
@@ -89,7 +89,7 @@ describe('Platform', () => {
     it('should stop the Program when a signal is emitted', async () => {
       const signal = new Subject<any>()
 
-      const cmds: Array<Task<Option<App.Msg>>> = []
+      const cmds: Array<T.Task<Option<App.Msg>>> = []
       const models: App.Model[] = []
       const subs: App.Msg[] = []
       const { model$, cmd$, sub$, dispatch } = withStop(signal)(program(App.init, App.update, App.subscriptions))

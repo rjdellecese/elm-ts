@@ -1,5 +1,5 @@
 import { some } from 'fp-ts/lib/Option'
-import { task } from 'fp-ts/lib/Task'
+import * as T from 'fp-ts/lib/Task'
 import { EMPTY, Observable, of } from 'rxjs'
 import * as cmd from '../../src/Cmd'
 import { Html } from '../../src/Html'
@@ -10,9 +10,9 @@ const withModel = (model: Model): State => [model, cmd.none]
 
 const withEffect = (model: Model, cmd: cmd.Cmd<Msg>): State => [model, cmd]
 
-const doFoo = of(task.of(some<Msg>({ type: 'FOO' })))
+const doFoo = of(T.of(some<Msg>({ type: 'FOO' })))
 
-const doBaz = of(task.of(some<Msg>({ type: 'BAZ' })))
+const doBaz = of(T.of(some<Msg>({ type: 'BAZ' })))
 
 // ---------
 // --- MODEL

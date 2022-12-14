@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     node: true
   },
-  ignorePatterns: ['es6/**/*', 'lib/**/*', '.eslintrc.js'],
+  ignorePatterns: ['es6/**/*', 'lib/**/*', '.eslintrc.js', 'jest.config.ts'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -11,11 +11,17 @@ module.exports = {
     'plugin:import/typescript'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'import'],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    project: './tsconfig.json'
+  },
+  plugins: ['@typescript-eslint', 'import', 'deprecation'],
   root: true,
   rules: {
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-    '@typescript-eslint/no-inferrable-types': 'off'
+    '@typescript-eslint/no-inferrable-types': 'off',
+    'deprecation/deprecation': 'warn'
   },
   overrides: [{ files: ['**/*.test.ts'], rules: { '@typescript-eslint/no-explicit-any': 'off' } }]
 }

@@ -138,4 +138,4 @@ React.run(main(component.flags), dom => render(dom, document.getElementById('app
 
 ## Documentation
 
-- [API Reference](https://gcanti.github.io/elm-ts)
+- [API Reference](https://rjdellecese.github.io/elm-ts)

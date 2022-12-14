@@ -6,8 +6,8 @@
  * @since 0.5.0
  */
 
-import { Option, option, some } from 'fp-ts/lib/Option'
-import { Task, task } from 'fp-ts/lib/Task'
+import * as O from 'fp-ts/lib/Option'
+import * as T from 'fp-ts/lib/Task'
 import { EMPTY, Observable, merge, of as RxOf } from 'rxjs'
 import { map as RxMap } from 'rxjs/operators'
 
@@ -15,7 +15,7 @@ import { map as RxMap } from 'rxjs/operators'
  * @category model
  * @since 0.5.0
  */
-export type Cmd<Msg> = Observable<Task<Option<Msg>>>
+export type Cmd<Msg> = Observable<T.Task<O.Option<Msg>>>
 
 /**
  * Creates a new `Cmd` that carries the provided `Msg`.
@@ -23,7 +23,7 @@ export type Cmd<Msg> = Observable<Task<Option<Msg>>>
  * @since 0.5.0
  */
 export function of<Msg>(m: Msg): Cmd<Msg> {
-  return RxOf(task.of(some(m)))
+  return RxOf(T.of(O.some(m)))
 }
 
 /**
@@ -32,7 +32,7 @@ export function of<Msg>(m: Msg): Cmd<Msg> {
  * @since 0.5.0
  */
 export function map<A, Msg>(f: (a: A) => Msg): (cmd: Cmd<A>) => Cmd<Msg> {
-  return cmd => cmd.pipe(RxMap(t => task.map(t, o => option.map(o, f))))
+  return cmd => cmd.pipe(RxMap(T.map(O.map(f))))
 }
 
 /**

@@ -71,7 +71,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const apFirst: <B>(fb: Decoder<B>) => <A>(fa: Decoder<A>) => Decoder<A>
+export declare const apFirst: <B>(second: Decoder<B>) => <A>(first: Decoder<A>) => Decoder<A>
 ```
 
 Added in v0.5.0
@@ -81,7 +81,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const apSecond: <B>(fb: Decoder<B>) => <A>(fa: Decoder<A>) => Decoder<B>
+export declare const apSecond: <B>(second: Decoder<B>) => <A>(first: Decoder<A>) => Decoder<B>
 ```
 
 Added in v0.5.0
@@ -105,7 +105,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const chain: <A, B>(f: (a: A) => Decoder<B>) => (ma: Decoder<A>) => Decoder<B>
+export declare const chain: <A, B>(f: (a: A) => Decoder<B>) => (fa: Decoder<A>) => Decoder<B>
 ```
 
 Added in v0.5.0
@@ -115,7 +115,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const chainFirst: <A, B>(f: (a: A) => Decoder<B>) => (ma: Decoder<A>) => Decoder<A>
+export declare const chainFirst: <A, B>(f: (a: A) => Decoder<B>) => (first: Decoder<A>) => Decoder<A>
 ```
 
 Added in v0.5.0
@@ -125,7 +125,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const flatten: <A>(mma: Decoder<Decoder<A>>) => Decoder<A>
+export declare const flatten: typeof Compactable.compact
 ```
 
 Added in v0.5.0
@@ -191,7 +191,7 @@ Added in v0.5.0
 **Signature**
 
 ```ts
-export declare const decoder: Monad1<'elm-ts/Decoder'> & Alternative1<'elm-ts/Decoder'>
+export declare const decoder: Monad.Monad1<'elm-ts/Decoder'> & Alternative1<'elm-ts/Decoder'>
 ```
 
 Added in v0.5.0

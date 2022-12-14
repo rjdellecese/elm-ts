@@ -1,7 +1,7 @@
-import { array } from 'fp-ts/lib/Array'
+import * as A from 'fp-ts/lib/Array'
 import * as RTE from 'fp-ts/lib/ReaderTaskEither'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { pipe } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/function'
 import { FileSystem, fileSystemNode } from './helpers/fs'
 import { Logger, loggerConsole } from './helpers/logger'
 import { Program, run } from './helpers/program'
@@ -10,7 +10,7 @@ import { Program, run } from './helpers/program'
 const PATH_REGEXP = /(\s(?:from|module)\s['|"]fp-ts)\/lib\/([\w-\/]+['|"])/gm
 const ES6_GLOB_PATTERN = 'es6/**/*.@(ts|js)'
 
-const traverseRTE = array.traverse(RTE.readerTaskEither)
+const traverseRTE = A.traverse(RTE.ApplicativeSeq)
 
 interface Capabilities extends FileSystem, Logger {}
 
@@ -37,7 +37,9 @@ const log =
 
 const main: AppEff<void[]> = pipe(
   getES6Paths,
-  RTE.chain(files => traverseRTE(files, rewritePaths)),
+  RTE.chain<Capabilities, string, string[], void[]>(files =>
+    traverseRTE<string, Capabilities, string, void>(rewritePaths)(files)
+  ),
   RTE.chainFirst(() => log('ES6 import paths rewritten'))
 )
 

@@ -5,7 +5,7 @@ import * as T from 'fp-ts/lib/Task'
 import * as Rx from 'rxjs'
 import { batch, map, of } from '../src/Cmd'
 
-const sequenceTask = A.array.sequence(T.task)
+const sequenceTask = A.sequence(T.ApplicativeSeq)
 
 describe('Cmd', () => {
   it('of() should lift a Msg into a Cmd', done => {

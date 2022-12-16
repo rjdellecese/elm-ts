@@ -7,7 +7,7 @@ A porting of [_The Elm Architecture_](https://guide.elm-lang.org/architecture/) 
 ## Installation
 
 ```sh
-npm i elm-ts fp-ts rxjs react
+npm install @rjdellecese/elm-ts fp-ts rxjs react
 ```
 
 Note: `fp-ts`, `rxjs` and `react` are peer dependencies
